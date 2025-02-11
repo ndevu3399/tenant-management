@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tenant Management</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Tenant Management</h1>
+        <form id="tenantForm">
+            <input type="text" id="tenantName" placeholder="Tenant Name" required>
+            <input type="text" id="tenantID" placeholder="Tenant ID" required>
+            <input type="text" id="tenantPhone" placeholder="Phone Number" required>
+            <input type="email" id="tenantEmail" placeholder="Email Address" required>
+            <button type="submit">Add Tenant</button>
+        </form>
+
+        <h2>Tenant List</h2>
+        <ul id="tenantList"></ul>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

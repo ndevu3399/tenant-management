@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tenant Profile</title>
+    <link rel="stylesheet" href="profile.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Tenant Profile</h1>
+        <div id="tenantDetails"></div>
+
+        <h2>Upload Documents</h2>
+        <form id="uploadForm">
+            <label for="idCopy">Upload ID Copy:</label>
+            <input type="file" id="idCopy" accept="image/*,application/pdf">
+
+            <label for="agreementCopy">Upload Tenancy Agreement:</label>
+            <input type="file" id="agreementCopy" accept="image/*,application/pdf">
+
+            <button type="submit">Upload Files</button>
+        </form>
+
+        <h2>Uploaded Documents</h2>
+        <div id="documentList"></div>
+
+        <a href="index.html" class="back-link">Back to Tenant List</a>
+    </div>
+
+    <script src="profile.js"></script>
+</body>
+</html>
