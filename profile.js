@@ -7,6 +7,8 @@ document.addEventListener("DOMContentLoaded", function () {
     const idCopyInput = document.getElementById("idCopy");
     const agreementCopyInput = document.getElementById("agreementCopy");
     const documentList = document.getElementById("documentList");
+    const paymentForm = document.getElementById("paymentForm");
+    const paymentList = document.getElementById("paymentList");
 
     let tenants = JSON.parse(localStorage.getItem("tenants")) || [];
     let tenant = tenants.find(t => t.tenantID === tenantID);
@@ -20,6 +22,7 @@ document.addEventListener("DOMContentLoaded", function () {
         `;
 
         displayDocuments(tenant);
+        displayPayments(tenant);
     } else {
         tenantDetailsDiv.innerHTML = `<p>Tenant not found. <a href="index.html">Go back</a></p>`;
     }
@@ -40,6 +43,25 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 
+    paymentForm.addEventListener("submit", function (event) {
+        event.preventDefault();
+        
+        if (tenant) {
+            const amount = document.getElementById("paymentAmount").value;
+            const date = document.getElementById("paymentDate").value;
+            const method = document.getElementById("paymentMethod").value;
+
+            if (amount && date && method) {
+                const payment = { amount, date, method };
+                tenant.payments = tenant.payments || [];
+                tenant.payments.push(payment);
+                saveTenants();
+                displayPayments(tenant);
+                paymentForm.reset();
+            }
+        }
+    });
+
     function saveTenants() {
         localStorage.setItem("tenants", JSON.stringify(tenants));
     }
@@ -55,4 +77,25 @@ document.addEventListener("DOMContentLoaded", function () {
             documentList.innerHTML += `<p><strong>Tenancy Agreement:</strong> <a href="${tenant.agreementCopy}" target="_blank">View</a></p>`;
         }
     }
+
+    function displayPayments(tenant) {
+        paymentList.innerHTML = "";
+        if (tenant.payments && tenant.payments.length > 0) {
+            tenant.payments.forEach((payment, index) => {
+                const paymentItem = document.createElement("li");
+                paymentItem.innerHTML = `Amount: ${payment.amount}, Date: ${payment.date}, Method: ${payment.method} 
+                    <button class="delete-payment" data-index="${index}">Remove</button>`;
+                paymentList.appendChild(paymentItem);
+            });
+        }
+    }
+
+    paymentList.addEventListener("click", function (event) {
+        if (event.target.classList.contains("delete-payment")) {
+            const index = event.target.dataset.index;
+            tenant.payments.splice(index, 1);
+            saveTenants();
+            displayPayments(tenant);
+        }
+    });
 });
